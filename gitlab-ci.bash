@@ -11,7 +11,7 @@ fi
 
 # Manage self testing
 #--------------------
-if [[ "${CI_PROJECT_NAME}" == "ros_gitlab_ci" ]]; then
+if [[ "${CI_PROJECT_NAME}" == "ros-gitlab-ci" ]]; then
   echo "##############################################"
   SELF_TESTING="true"
 
@@ -38,8 +38,8 @@ else
   # ccache
   #-------
   if [[ -z "${DISABLE_CCACHE}" || "${DISABLE_CCACHE}" != "true" ]]; then
-    source ros_gitlab_ci/ccache.bash
+    source ros-gitlab-ci/ccache.bash
   fi
 
-  source ros_gitlab_ci/gitlab-ros.bash
+  source ros-gitlab-ci/gitlab-ros.bash
 fi
