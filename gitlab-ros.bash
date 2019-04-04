@@ -11,8 +11,8 @@ fi
 
 # Install gcc g++
 #----------------
-apt-get update
-apt-get install -qq gcc g++
+#apt-get update
+#apt-get install -qq gcc g++
 
 # Source ROS
 #-----------
@@ -20,15 +20,15 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 
 # Install catkin tools # https://catkin-tools.readthedocs.io/en/latest/installing.html
 #---------------------
-apt-get install -qq wget
-sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" > /etc/apt/sources.list.d/ros-latest.list'
-wget http://packages.ros.org/ros.key -O - | apt-key add -
-apt-get update
-apt-get install -qq python-catkin-tools xterm
-export TERM="xterm"
+#apt-get install -qq wget
+#sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" > /etc/apt/sources.list.d/ros-latest.list'
+#wget http://packages.ros.org/ros.key -O - | apt-key add -
+#apt-get update
+#apt-get install -qq python-catkin-tools xterm
+#export TERM="xterm"
 
 # Install catkin lint
-apt-get install -qq python-catkin-lint
+#apt-get install -qq python-catkin-lint
 
 # Install ROS packages required by the user
 #------------------------------------------
@@ -114,7 +114,7 @@ else
   fi
 
   # Install wstool
-  apt-get install -qq python-wstool
+#  apt-get install -qq python-wstool
   # Create workspace
   cd catkin_workspace
   wstool init src ${rosinstall_file}
@@ -159,7 +159,7 @@ cd ${CI_PROJECT_DIR}/catkin_workspace/
 if [[ ("${USE_ROSDEP}" != false && ! -z "${USE_ROSDEP}") || -z "${USE_ROSDEP}" ]]; then
   echo "Using rosdep to install dependencies"
   # Install rosdep and initialize
-  apt-get install -qq python-rosdep python-pip
+#  apt-get install -qq python-rosdep python-pip
   rosdep init || true
   rosdep update
 
