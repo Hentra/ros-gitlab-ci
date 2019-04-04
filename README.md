@@ -1,7 +1,5 @@
 [![ROS](http://www.ros.org/wp-content/uploads/2013/10/rosorg-logo1.png)](http://www.ros.org/)
 
-[![build status](https://gitlab.com/VictorLamoine/ros_gitlab_ci/badges/master/build.svg)](https://gitlab.com/VictorLamoine/ros_gitlab_ci/commits/master)
-
 Using Travis CI? Take a look at [ros-industrial/industrial_ci](https://github.com/ros-industrial/industrial_ci).
 
 ## Description
