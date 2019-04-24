@@ -90,59 +90,10 @@ fi
 #--------------
 # https://docs.gitlab.com/ce/ci/variables/README.html#predefined-variables-environment-variables
 
-# Does this project have a wstool install file?
-rosinstall_file=$(find ${CI_PROJECT_DIR} -maxdepth 2 -type f -name "*.rosinstall")
-
 cd ${CI_PROJECT_DIR}/..
 rm -rf catkin_workspace/src
 mkdir -p catkin_workspace/src
-
-if [[ -z "${rosinstall_file}" ]]; then
-  # No rosinstall file
-  # Copy current directory into a src directory
-  # Don't move the original clone or GitLab CI fails!
-  cp -r ${CI_PROJECT_DIR} catkin_workspace/src/
-else
-  echo "Using wstool file ${rosinstall_file}"
-
-  # Use GitLab CI tokens if required by the user
-  # This allows to clone private repositories using wstool
-  # Requires GitLab 8.12 and that the private repositories are on the same GitLab server
-  if [[ "${ROSINSTALL_CI_JOB_TOKEN}" == "true" ]]; then
-    echo "Modify rosinstall file to use GitLab CI job token"
-    ${CI_PROJECT_DIR}/ros_gitlab_ci/rosinstall_ci_job_token.bash ${rosinstall_file}
-  fi
-
-  # Install wstool
-#  apt-get install -qq python-wstool
-  # Create workspace
-  cd catkin_workspace
-  wstool init src ${rosinstall_file}
-
-  if [[ "${WSTOOL_RECURSIVE}" == "true" ]]; then
-    echo "Using wstool recursively"
-    while : ; do
-      rosinstall_files=$(find src -type f -name "*?.rosinstall")
-      rosinstall_file=$(echo ${rosinstall_files} | cut -d ' ' -f 1)
-      if [[ -z "${rosinstall_file}" ]]; then
-        break
-      fi
-      if [[ "${ROSINSTALL_CI_JOB_TOKEN}" == "true" ]]; then
-        ${CI_PROJECT_DIR}/ros_gitlab_ci/rosinstall_ci_job_token.bash ${rosinstall_file}
-      fi
-      wstool merge ${rosinstall_file} -t src
-      rm ${rosinstall_file}
-      wstool update -t src
-    done
-
-    wstool update -t src
-  fi
-
-  # If the project itself is not included in rosinstall file, copy it manually
-  if [ ! -d "src/${CI_PROJECT_NAME}" ]; then
-    cp -r ${CI_PROJECT_DIR} src
-  fi
-fi
+cp -r ${CI_PROJECT_DIR} catkin_workspace/src/
 
 mv ${CI_PROJECT_DIR}/../catkin_workspace ${CI_PROJECT_DIR}
 
